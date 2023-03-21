@@ -1,0 +1,48 @@
+import UIKit
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var textView: UITextView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+    }
+
+    // 버튼 액션 저장
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let textToSave = textView.text, !textToSave.isEmpty else {
+           
+            let alert = UIAlertController(title: "Error", message: "Please enter text to save.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        
+        UserDefaults.standard.set(textToSave, forKey: "savedText")
+        
+        
+        let alert = UIAlertController(title: "Success", message: "The text has been saved.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 버튼 액션 로드
+    @IBAction func loadButtonTapped(_ sender: Any) {
+       
+        let savedText = UserDefaults.standard.string(forKey: "savedText")
+        
+       
+        textView.text = savedText ?? ""
+        
+        // 성공메시지 띄우기
+        let alert = UIAlertController(title: "Success", message: "The text has been loaded.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+}
